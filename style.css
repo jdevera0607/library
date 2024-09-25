@@ -2,7 +2,10 @@
     font-family: Norse-Bold;
     src:url(font/Norse-Bold.otf);
 }
-
+*{
+    padding: 0;
+    margin: 0;
+}
 body{
     height: 100vh;
     display: flex;
@@ -10,7 +13,6 @@ body{
     background-color: whitesmoke;
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
-
 }
 main{
     display:flex;
@@ -74,19 +76,20 @@ aside{
     flex-wrap: wrap;
     font-size: 1.5rem;
     margin: 40px;
-    top:40px;
+    top:60px;
 }
 .btn{
     width: 100px;
     height: 40px;
     background-color: rgb(77, 117, 86);
     color:whitesmoke;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 .getStarted-btn{
     display: flex;
-    
+    position: relative;
+    top: 20px;
 }
 /* form */
 
@@ -142,7 +145,7 @@ input{
 /* bottom form */ 
 .bottom-container{
     position: relative;
-    top:120px;
+    top:40px;
     display:flex;
     flex-direction: column;
 }
@@ -155,3 +158,15 @@ input{
     height: 50px;
     width: 200px;
 }
+
+/* list*/
+
+.list-container{
+    display:flex;
+    gap:20px;
+    position:relative;
+    flex-direction: column;
+    top: 800px;
+    margin: 40px;
+}
+
