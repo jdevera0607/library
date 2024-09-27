@@ -1,7 +1,7 @@
 const form = document.querySelector('#form-container');
 const start = document.querySelector('.btn');
 const submit = document.querySelector('.submit');
-const list = document.querySelector('.list-container');
+const library = document.querySelector('.library-container');
 
 const authorInput = document.querySelector('#author');
 const titleInput = document.querySelector('#title');
@@ -11,44 +11,68 @@ const readInput = document.querySelector('#read');
 const bookLibrary = [];
 
 function Book(author, title, pages, read){
-
     this.author = author;
     this.title = title;
     this.pages = pages;
     this.read = read;
+};
+Book.prototype.getRead = function(book){
+   console.log(book);
+    
+}
+function addBookToLibrary(){
 
-    bookLibrary.push(author, title, pages, read);
-    displayBook();
+    let author = authorInput.value;
+    let title = titleInput.value;
+    let pages = pagesInput.value;
+    let read  = readInput.value.toLowerCase();
+
+    const book = new Book(author,title,pages, read);
+    bookLibrary.push(book);
+   
+    displayBook(book);
     clearBook();
     clearForm();
 }
 
-function addBookToLibrary(){
-
-    let authorVal = authorInput.value;
-    let titleVal = titleInput.value;
-    let pagesVal = pagesInput.value;
-    let readVal  = readInput.value;
-
-    const book = new Book(authorVal,titleVal,pagesVal,readVal);
-}
-
-function displayBook(){
-    const library = document.createElement('ul');
+function displayBook(book){
+    const newBook = document.createElement('ul');
     const deleteBtn = document.createElement('button');
-    list.appendChild(library);
+    library.appendChild(newBook);
+    
     for(let i = 0; i < bookLibrary.length; i++){
-        const listItem = document.createElement('li');
-        library.appendChild(listItem);
-        listItem.textContent = bookLibrary[i];
-    }
-    deleteBtn.textContent = "Delete";
-    library.appendChild(deleteBtn); 
    
+        let author = bookLibrary[i].author;
+        const authorDisplay = document.createElement('li');
+        authorDisplay.textContent = author;
+        newBook.appendChild(authorDisplay);
+
+        let title = bookLibrary[i].title;
+        const titleDisplay = document.createElement('li');
+        titleDisplay.textContent = title;
+        newBook.appendChild(titleDisplay);
+
+        let pages = bookLibrary[i].pages;
+        const pagesDisplay = document.createElement('li');
+        pagesDisplay.textContent = pages;
+        newBook.appendChild(pagesDisplay);
+
+        let read = bookLibrary[i].read;
+        const readBtn = document.createElement('button');
+        readBtn.textContent = read;
+        newBook.appendChild(readBtn);
+        readBtn.addEventListener('click', book.getRead(book));
+    }
+    
+    deleteBtn.textContent = "Delete";
+    newBook.appendChild(deleteBtn); 
+
+    
     deleteBtn.addEventListener('click', () => {
         library.remove();
     })
 }
+
 function clearForm(){
     authorInput.value = '';
     titleInput.value = '';

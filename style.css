@@ -161,7 +161,7 @@ input{
 
 /* list*/
 
-.list-container{
+.library-container{
     display:flex;
     gap:20px;
     position:relative;
