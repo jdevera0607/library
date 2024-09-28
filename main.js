@@ -8,6 +8,8 @@ const titleInput = document.querySelector('#title');
 const pagesInput = document.querySelector('#pages');
 const readInput = document.querySelector('#read');
 
+
+
 const bookLibrary = [];
 
 function Book(author, title, pages, read){
@@ -15,17 +17,26 @@ function Book(author, title, pages, read){
     this.title = title;
     this.pages = pages;
     this.read = read;
+
 };
-Book.prototype.getRead = function(book){
-   console.log(book);
-    
+Book.prototype.getRead = function(book, readBtn){
+    if(this.read !== 'Read'){
+        this.read = 'Read';
+        readBtn.textContent = this.read;
+  
+    }else{
+        this.read = 'Not read';
+        readBtn.textContent = this.read;
+  
+    }
+
 }
 function addBookToLibrary(){
 
     let author = authorInput.value;
     let title = titleInput.value;
     let pages = pagesInput.value;
-    let read  = readInput.value.toLowerCase();
+    let read  = readInput.value;
 
     const book = new Book(author,title,pages, read);
     bookLibrary.push(book);
@@ -38,6 +49,7 @@ function addBookToLibrary(){
 function displayBook(book){
     const newBook = document.createElement('ul');
     const deleteBtn = document.createElement('button');
+    const readBtn = document.createElement('button');
     library.appendChild(newBook);
     
     for(let i = 0; i < bookLibrary.length; i++){
@@ -58,16 +70,15 @@ function displayBook(book){
         newBook.appendChild(pagesDisplay);
 
         let read = bookLibrary[i].read;
-        const readBtn = document.createElement('button');
         readBtn.textContent = read;
         newBook.appendChild(readBtn);
-        readBtn.addEventListener('click', book.getRead(book));
+     
+        readBtn.addEventListener('click', () => {book.getRead(book,readBtn)});
     }
     
     deleteBtn.textContent = "Delete";
     newBook.appendChild(deleteBtn); 
 
-    
     deleteBtn.addEventListener('click', () => {
         library.remove();
     })
@@ -77,7 +88,7 @@ function clearForm(){
     authorInput.value = '';
     titleInput.value = '';
     pagesInput.value = '';
-    readInput.value = '';
+
 }
 function clearBook(){
     while(bookLibrary.length > 0) {
@@ -85,10 +96,19 @@ function clearBook(){
     }
 }
 submit.addEventListener('click', () => {
-    addBookToLibrary();
+    if(readInput.checked){
+        addBookToLibrary();
+    }else{
+        readInput.value = "Not read";
+        addBookToLibrary();
+    }
+    
 });
 
 start.addEventListener("click", (e) => {
     form.classList.toggle("hidden");
 });
+
+
+
 
