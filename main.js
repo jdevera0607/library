@@ -1,26 +1,84 @@
 //Class refactor of library
-//encapsulate the book constructor into a class
+//encapsulate the book constructor into a class √
 //encapsulate the display into its own function
-//refactor HTML form into JS dynamic form
-
-// class Library {
-//     constructor(){
-//         this.value = value;
-//     }
-// }
+//use inheritance to change read status - in progress
+//refactor HTML form into JS dynamic form √
 
 const submit = document.querySelector('.submit');
-const library = document.querySelector('.library-container');
+
 
 // const authorInput = document.querySelector('#author');
 // const titleInput = document.querySelector('#title');
 // const pagesInput = document.querySelector('#pages');
 // const readInput = document.querySelector('#read');
 
-const bookLibrary = [];
-//create dynamic HTML form
-const createForm = (function(){
+function Book(author, title, pages, read){
+    this.author = author;
+    this.title = title;
+    this.pages = pages;
+    this.read = read;
+}
+// Book.prototype.getRead = function(book, readBtn){
+//     if(this.read !== 'Read'){
+//         this.read = 'Read';
+//         readBtn.textContent = this.read;
+  
+//     }else{
+//         this.read = 'Not read';
+//         readBtn.textContent = this.read;
+  
+//     }
+// }
+function Library(book){
+    this.book = book;
+    const library = [];
+    library.push(book);
+    
+   function displayLibrary(){
+    const newBook = document.createElement('ul');
+    const deleteBtn = document.createElement('button');
+    const readBtn = document.createElement('button');
 
+    const libraryEl = document.querySelector('.library-container');
+    libraryEl.appendChild(newBook);
+    
+    for(let i = 0; i < library.length; i++){
+   
+        let author = library[i].author;
+        const authorDisplay = document.createElement('li');
+        authorDisplay.textContent = author;
+        newBook.appendChild(authorDisplay);
+
+        let title = library[i].title;
+        const titleDisplay = document.createElement('li');
+        titleDisplay.textContent = title;
+        newBook.appendChild(titleDisplay);
+
+        let pages = library[i].pages;
+        const pagesDisplay = document.createElement('li');
+        pagesDisplay.textContent = pages;
+        newBook.appendChild(pagesDisplay);
+
+        let read = library[i].read;
+        readBtn.textContent = read;
+        newBook.appendChild(readBtn);
+     
+        // readBtn.addEventListener('click', () => {book.getRead(book,readBtn)});
+    }
+    
+    // deleteBtn.textContent = "Delete";
+    // newBook.appendChild(deleteBtn); 
+
+    // deleteBtn.addEventListener('click', () => {
+    //     libraryEl.remove();
+    // })
+   }
+   displayLibrary();
+}
+
+//This input form was created as an IIFE and the form creation function is encapsulated for book creations
+
+const bookInput = (function(){                                      
     const formCreate = () => {
         const formContainer = document.querySelector('#form-container');
         const form = document.createElement('form');
@@ -75,11 +133,24 @@ const createForm = (function(){
             const pagesInput = bookData.get('bookPages');
             const readInput = readEl.checked ? 'read' : 'not read'
 
-            console.log(authorInput, titleInput, pagesInput, readInput);
+            const book = new Book(authorInput, titleInput, pagesInput, readInput);
+            const library = new Library(book);
+            
+            authorEl.value = '';
+            titleEl.value = ''
+            pagesEl.value= '';
+            readEl.checked = false;
         })
     }
-    formCreate();
+  
+    formCreate(); //initialize first form
+    return {
+        formCreate,
+    }
 })();
+
+
+
 //submit.addEventListener('click', () => {
     //     if(readInput.checked){
     //         addBookToLibrary();
@@ -95,17 +166,7 @@ const createForm = (function(){
 //     this.read = read;
 
 // };
-// Book.prototype.getRead = function(book, readBtn){
-//     if(this.read !== 'Read'){
-//         this.read = 'Read';
-//         readBtn.textContent = this.read;
-  
-//     }else{
-//         this.read = 'Not read';
-//         readBtn.textContent = this.read;
-  
-//     }
-// }
+
 // function addBookToLibrary(){
 
 //     let author = authorInput.value;
@@ -122,41 +183,7 @@ const createForm = (function(){
 // }
 
 // function displayBook(book){
-//     const newBook = document.createElement('ul');
-//     const deleteBtn = document.createElement('button');
-//     const readBtn = document.createElement('button');
-//     library.appendChild(newBook);
-    
-//     for(let i = 0; i < bookLibrary.length; i++){
-   
-//         let author = bookLibrary[i].author;
-//         const authorDisplay = document.createElement('li');
-//         authorDisplay.textContent = author;
-//         newBook.appendChild(authorDisplay);
-
-//         let title = bookLibrary[i].title;
-//         const titleDisplay = document.createElement('li');
-//         titleDisplay.textContent = title;
-//         newBook.appendChild(titleDisplay);
-
-//         let pages = bookLibrary[i].pages;
-//         const pagesDisplay = document.createElement('li');
-//         pagesDisplay.textContent = pages;
-//         newBook.appendChild(pagesDisplay);
-
-//         let read = bookLibrary[i].read;
-//         readBtn.textContent = read;
-//         newBook.appendChild(readBtn);
-     
-//         readBtn.addEventListener('click', () => {book.getRead(book,readBtn)});
-//     }
-    
-//     deleteBtn.textContent = "Delete";
-//     newBook.appendChild(deleteBtn); 
-
-//     deleteBtn.addEventListener('click', () => {
-//         library.remove();
-//     })
+//     
 // }
 
 // function clearForm(){
