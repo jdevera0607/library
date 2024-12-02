@@ -1,128 +1,60 @@
 //Class refactor of library
 //encapsulate the book constructor into a class √
-//encapsulate the display into its own function
-//use inheritance to change read status - in progress
+//encapsulate the display into its own function√
+//use inheritance to change read status - √
 //refactor HTML form into JS dynamic form √
+//Create grid for library - in progress
+//Design and organize
+const createForm = (function(){
+    const dialog = document.querySelector('#formDialog');
+    const dialogBtn = document.createElement('BUTTON');
+    const btnContainer = document.querySelector('.newBook-btn');
 
-const submit = document.querySelector('.submit');
+    dialogBtn.textContent = 'Add Book';
+    dialogBtn.classList.add('btn')
+    btnContainer.append(dialogBtn);
 
-
-// const authorInput = document.querySelector('#author');
-// const titleInput = document.querySelector('#title');
-// const pagesInput = document.querySelector('#pages');
-// const readInput = document.querySelector('#read');
-
-function Book(author, title, pages, read){
-    this.author = author;
-    this.title = title;
-    this.pages = pages;
-    this.read = read;
-}
-// Book.prototype.getRead = function(book, readBtn){
-//     if(this.read !== 'Read'){
-//         this.read = 'Read';
-//         readBtn.textContent = this.read;
-  
-//     }else{
-//         this.read = 'Not read';
-//         readBtn.textContent = this.read;
-  
-//     }
-// }
-function Library(book){
-    this.book = book;
-    const library = [];
-    library.push(book);
-    
-   function displayLibrary(){
-    const newBook = document.createElement('ul');
-    const deleteBtn = document.createElement('button');
-    const readBtn = document.createElement('button');
-
-    const libraryEl = document.querySelector('.library-container');
-    libraryEl.appendChild(newBook);
-    
-    for(let i = 0; i < library.length; i++){
-   
-        let author = library[i].author;
-        const authorDisplay = document.createElement('li');
-        authorDisplay.textContent = author;
-        newBook.appendChild(authorDisplay);
-
-        let title = library[i].title;
-        const titleDisplay = document.createElement('li');
-        titleDisplay.textContent = title;
-        newBook.appendChild(titleDisplay);
-
-        let pages = library[i].pages;
-        const pagesDisplay = document.createElement('li');
-        pagesDisplay.textContent = pages;
-        newBook.appendChild(pagesDisplay);
-
-        let read = library[i].read;
-        readBtn.textContent = read;
-        newBook.appendChild(readBtn);
-     
-        // readBtn.addEventListener('click', () => {book.getRead(book,readBtn)});
-    }
-    
-    // deleteBtn.textContent = "Delete";
-    // newBook.appendChild(deleteBtn); 
-
-    // deleteBtn.addEventListener('click', () => {
-    //     libraryEl.remove();
-    // })
-   }
-   displayLibrary();
-}
-
-//This input form was created as an IIFE and the form creation function is encapsulated for book creations
-
-const bookInput = (function(){                                      
-    const formCreate = () => {
-        const formContainer = document.querySelector('#form-container');
-        const form = document.createElement('form');
-        form.id = 'form';
-        formContainer.appendChild(form);
-
-        const authorLabel = document.createElement('label');
+    const bookForm = (function(){
+        const form = document.querySelector('#form');
+        const authorLabel = document.createElement('LABEL');
         authorLabel.textContent = 'Author';
         form.appendChild(authorLabel);
-        const authorEl = document.createElement('input');
+
+        const authorEl = document.createElement('INPUT');
         authorEl.classList.add('book-author');
         authorEl.placeholder = 'J.R.R Tolkien';
         authorEl.name = 'authorName';
         form.appendChild(authorEl);
 
-        const titleLabel = document.createElement('label');
+        const titleLabel = document.createElement('LABEL');
         titleLabel.textContent = 'Title';
         form.appendChild(titleLabel);
-        const titleEl = document.createElement('input');
+        const titleEl = document.createElement('INPUT');
         titleEl.classList.add('book-title');
         titleEl.placeholder = 'The Hobbit';
         titleEl.name = 'bookName'
         form.appendChild(titleEl);
 
-        const pagesLabel = document.createElement('label');
+        const pagesLabel = document.createElement('LABEL');
         pagesLabel.textContent = 'Pages';
         form.appendChild(pagesLabel)
-        const pagesEl = document.createElement('input');
+        const pagesEl = document.createElement('INPUT');
         pagesEl.classList.add('book-pages');
         pagesEl.placeholder = '304';
         pagesEl.name = 'bookPages';
         form.appendChild(pagesEl);
 
-        const readLabel = document.createElement('label');
+        const readLabel = document.createElement('LABEL');
         readLabel.textContent = 'Read / Not Read';
         form.appendChild(readLabel);
-        const readEl = document.createElement('input');
+        const readEl = document.createElement('INPUT');
         readEl.classList.add('book-read');
         readEl.type = 'checkbox';
         form.appendChild(readEl);
 
-        const submitBtn = document.createElement('button');
+        const submitBtn = document.createElement('BUTTON');
         submitBtn.type = 'submit';
-        submitBtn.textContent = 'New Book';
+        submitBtn.textContent = 'Submit';
         form.appendChild(submitBtn);
 
         submitBtn.addEventListener('click', (e) => {
@@ -131,8 +63,8 @@ const bookInput = (function(){
             const authorInput = bookData.get('authorName');
             const titleInput = bookData.get('bookName');
             const pagesInput = bookData.get('bookPages');
-            const readInput = readEl.checked ? 'read' : 'not read'
-
+            const readInput = readEl.checked ? 'Read' : 'Not read'
+    
             const book = new Book(authorInput, titleInput, pagesInput, readInput);
             const library = new Library(book);
             
@@ -140,70 +72,85 @@ const bookInput = (function(){
             titleEl.value = ''
             pagesEl.value= '';
             readEl.checked = false;
+            dialog.close();
+        })
+    }());
+
+    dialogBtn.addEventListener('click', () => {
+        dialog.showModal();
+    });
+    // dialog.addEventListener('click', (e) => {
+    //     if(e.target.id !== 'form'){
+    //         dialog.close();
+    //     }
+    // });
+}())
+
+function Book(author, title, pages, read){
+    this.author = author;
+    this.title = title;
+    this.pages = pages;
+    this.read = read;
+}
+Book.prototype.getRead = function(book, readBtn){
+    if(this.read !== 'Read'){
+        this.read = 'Read';
+        readBtn.textContent = this.read;
+  
+    }else{
+        this.read = 'Not read';
+        readBtn.textContent = this.read;
+    }
+}
+function Library(book){
+    this.book = book;
+    const library = [];
+    library.push(book);
+    
+   function displayLibrary(){
+        const newBook = document.createElement('ul');
+        const deleteBtn = document.createElement('button');
+        const readBtn = document.createElement('button');
+
+        newBook.classList.add('book');
+
+        const libraryEl = document.querySelector('.library-container');
+        libraryEl.append(newBook);
+        
+        for(let i = 0; i < library.length; i++){
+    
+            let author = library[i].author;
+            const authorDisplay = document.createElement('li');
+            authorDisplay.textContent = author;
+            newBook.appendChild(authorDisplay);
+
+            let title = library[i].title;
+            const titleDisplay = document.createElement('li');
+            titleDisplay.textContent = title;
+            newBook.appendChild(titleDisplay);
+
+            let pages = library[i].pages;
+            const pagesDisplay = document.createElement('li');
+            pagesDisplay.textContent = pages;
+            newBook.appendChild(pagesDisplay);
+
+            let read = library[i].read;
+            readBtn.textContent = read;
+            newBook.appendChild(readBtn);
+        
+            readBtn.addEventListener('click', () => {book.getRead(book,readBtn)});
+        }
+        deleteBtn.textContent = 'Delete';
+        newBook.appendChild(deleteBtn); 
+
+        deleteBtn.addEventListener('click', () => {
+            newBook.remove();
         })
     }
-  
-    formCreate(); //initialize first form
-    return {
-        formCreate,
-    }
-})();
+    displayLibrary();
+}
+//This input form was created as an IIFE and the form creation function is encapsulated to allow only one form to be created until the form is submitted
 
-
-
-//submit.addEventListener('click', () => {
-    //     if(readInput.checked){
-    //         addBookToLibrary();
-    //     }else{
-    //         readInput.value = "Not read";
-    //         addBookToLibrary();
-    //     }
-
-// function Book(author, title, pages, read){
-//     this.author = author;
-//     this.title = title;
-//     this.pages = pages;
-//     this.read = read;
-
-// };
-
-// function addBookToLibrary(){
-
-//     let author = authorInput.value;
-//     let title = titleInput.value;
-//     let pages = pagesInput.value;
-//     let read  = readInput.value;
-
-//     const book = new Book(author,title,pages, read);
-//     bookLibrary.push(book);
-   
-//     displayBook(book);
-//     clearBook();
-//     clearForm();
-// }
-
-// function displayBook(book){
-//     
-// }
-
-// function clearForm(){
-//     authorInput.value = '';
-//     titleInput.value = '';
-//     pagesInput.value = '';
-
-// }
-// function clearBook(){
-//     while(bookLibrary.length > 0) {
-//         bookLibrary.pop();
-//     }
-// }
-//
-    
-// });
-
-// start.addEventListener("click", (e) => {
-//     form.classList.toggle("hidden");
-// });
 
 
 
