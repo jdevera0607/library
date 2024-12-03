@@ -8,17 +8,17 @@
 const createForm = (function(){
     const dialog = document.querySelector('#formDialog');
     const dialogBtn = document.createElement('BUTTON');
-    const btnContainer = document.querySelector('.newBook-btn');
+    const btnContainer = document.querySelector('.button-container');
 
     dialogBtn.textContent = 'Add Book';
-    dialogBtn.classList.add('btn')
+    dialogBtn.classList.add('newbook-btn')
     btnContainer.append(dialogBtn);
 
     const bookForm = (function(){
         const form = document.querySelector('#form');
         const authorLabel = document.createElement('LABEL');
         authorLabel.textContent = 'Author';
-        form.appendChild(authorLabel);
+        form.appendChild(authorLabel)
 
         const authorEl = document.createElement('INPUT');
         authorEl.classList.add('book-author');
@@ -79,11 +79,6 @@ const createForm = (function(){
     dialogBtn.addEventListener('click', () => {
         dialog.showModal();
     });
-    // dialog.addEventListener('click', (e) => {
-    //     if(e.target.id !== 'form'){
-    //         dialog.close();
-    //     }
-    // });
 }())
 
 function Book(author, title, pages, read){
@@ -121,17 +116,17 @@ function Library(book){
     
             let author = library[i].author;
             const authorDisplay = document.createElement('li');
-            authorDisplay.textContent = author;
+            authorDisplay.textContent = `Author: ${author}`;
             newBook.appendChild(authorDisplay);
 
             let title = library[i].title;
             const titleDisplay = document.createElement('li');
-            titleDisplay.textContent = title;
+            titleDisplay.textContent = `Book title: ${title}`
             newBook.appendChild(titleDisplay);
 
             let pages = library[i].pages;
             const pagesDisplay = document.createElement('li');
-            pagesDisplay.textContent = pages;
+            pagesDisplay.textContent = `Pages: ${pages}`;
             newBook.appendChild(pagesDisplay);
 
             let read = library[i].read;
