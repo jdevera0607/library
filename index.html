@@ -7,19 +7,77 @@
     <title>Document</title>
 </head>
 <body>
-<!-- aside-left -->
-    <div class="aside"></div>
+    <div class="center">
 <!-- Header -->
-    <div class="header-container">
-        <div class="header">
+        <div class="header-container">
+            <div class="bar"></div>
             <div class="user-welcome">
+                <h3>Hi There</h3>
                 <div class="user-image"></div>
-        <!--TODO: Convert this to JS for dynamic user greetings. This is a temporary solution -->
-            <h3>Hi There</h3>
+            </div>
+            <div class="button-container">
+                <div class ="newBook-btn"></div> 
+            </div>
+        </div>  
+<!-- aside-left -->
+    <div class="left-aside">
+        <h2>Dashboard</h2>
+        <div class="top-links">
+            <ul>
+                <li>Home</li>
+                <li>Profile</li>
+                <li>Messages</li>
+                <li>History</li>
+                <li>Tasks</li>
+                <li>Communities</li>
+            </ul>
+        </div>
+        <div class="bottom-links">
+            <ul>
+                <li>Settings</li>
+                <li>Support</li>
+                <li>Privacy</li>
+            </ul>
+        </div>
+    </div>
+<!-- aside-right -->
+    <div class="right-aside">
+        <h3>Announcements</h3>
+        <div class="announcements">
+            <div class="announcement-one">
+                <h4>Site Maintenance</h4>
+                <p>Currently, the add book button is the only functioning button. 
+                Once clicked, a dialog will open, and you can add the books that you wish to log!
+                </p>
+            </div>
+            <div class="announcement-two">
+                <h4>Community Share Day</h4>
+                <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Fusce suspendisse mollis cubilia semper venenatis.
+                </p>
+            </div>
+            <div class="announcement-three">
+                <h4>Updated Privacy Policy</h4>
+                <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Fusce suspendisse mollis cubilia semper venenatis.
+                </p>
             </div>
         </div>
-        <div class="button-container">
-            <div class ="newBook-btn"></div> 
+        <h3>Top rated novels</h3>
+        <div class="trending">
+            <div class="book-one">
+                <p>Book title: A Game of Thrones</p>
+                <p>Author: George R.R Martin</p>
+                <p>Pages: 694</p>
+            </div>
+            <div class="book-two">
+                <p>Book title: Harry Potter and the Philosopher's Stone</p>
+                <p>Author: J.K Rowling</p>
+                <p>Pages: 223</p>
+            </div>
+            <div class="book-three">
+                <p>Book title: Naruto, vol. 1</p>
+                <p>Author: Masashi Kishimoto</p>
+                <p>Pages: 187</p>
+            </div>
         </div>
     </div>
 <!--Dialog Box-->
@@ -27,9 +85,15 @@
         <form method="dialog" id="form"></form>
     </dialog>
 <!-- Library -->
-   <div class="library-container">
+    </div>
+    <div class = "main-container">
+        <div class = "h3-container"> 
         <h3>Your Books:</h3>
-   </div>
+    </div>
+    <div class="library-container"></div>
+    </div>
+    <div class = "footer-container"></div>
+</div>
    <!-- Do not edit anything below -->
    <script src="main.js"></script>
 </body>
