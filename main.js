@@ -4,7 +4,11 @@
 //use inheritance to change read status - √
 //refactor HTML form into JS dynamic form √
 //Create grid for library - in progress
+//Create grid for header
+//SVG icons for left-aside
+//Exit button for books
 //Design and organize
+
 const createForm = (function(){
     const dialog = document.querySelector('#formDialog');
     const dialogBtn = document.createElement('BUTTON');
@@ -13,6 +17,8 @@ const createForm = (function(){
     dialogBtn.textContent = 'Add Book';
     dialogBtn.classList.add('newbook-btn')
     btnContainer.append(dialogBtn);
+
+    let counter = 0;
 
     const bookForm = (function(){
         const form = document.querySelector('#form');
@@ -58,16 +64,20 @@ const createForm = (function(){
         form.appendChild(submitBtn);
 
         submitBtn.addEventListener('click', (e) => {
+            counter++;
             e.preventDefault();
             const bookData = new FormData(form);
             const authorInput = bookData.get('authorName');
             const titleInput = bookData.get('bookName');
             const pagesInput = bookData.get('bookPages');
             const readInput = readEl.checked ? 'Read' : 'Not read'
-    
-            const book = new Book(authorInput, titleInput, pagesInput, readInput);
-            const library = new Library(book);
-            
+
+            if(counter <= 6){
+                const book = new Book(authorInput, titleInput, pagesInput, readInput);
+                const library = new Library(book);
+            }else{
+                alert('You have too many books! Maximum of 6')
+            }
             authorEl.value = '';
             titleEl.value = ''
             pagesEl.value= '';
@@ -101,31 +111,33 @@ function Library(book){
     this.book = book;
     const library = [];
     library.push(book);
-    
+
    function displayLibrary(){
-        const newBook = document.createElement('ul');
-        const deleteBtn = document.createElement('button');
-        const readBtn = document.createElement('button');
-
+        const newBook = document.createElement('UL');
         newBook.classList.add('book');
+    
+        const deleteBtn = document.createElement('BUTTON');
+        deleteBtn.classList.add('delBtn');
+    
+        const readBtn = document.createElement('BUTTON');
+        readBtn.classList.add('readBtn');
 
-        const libraryEl = document.querySelector('.library-container');
-        libraryEl.append(newBook);
+        const bookEl = document.querySelector('.book-container');
+        bookEl.appendChild(newBook);
         
         for(let i = 0; i < library.length; i++){
-    
             let author = library[i].author;
-            const authorDisplay = document.createElement('li');
+            const authorDisplay = document.createElement('LI');
             authorDisplay.textContent = `Author: ${author}`;
             newBook.appendChild(authorDisplay);
 
             let title = library[i].title;
-            const titleDisplay = document.createElement('li');
+            const titleDisplay = document.createElement('LI');
             titleDisplay.textContent = `Book title: ${title}`
             newBook.appendChild(titleDisplay);
 
             let pages = library[i].pages;
-            const pagesDisplay = document.createElement('li');
+            const pagesDisplay = document.createElement('LI');
             pagesDisplay.textContent = `Pages: ${pages}`;
             newBook.appendChild(pagesDisplay);
 
